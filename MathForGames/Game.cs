@@ -48,7 +48,7 @@ namespace MathForGames
         {
             Start();
 
-            while(gameOver == false)
+            while(!gameOver == false)
             {
                 Update();
                 Draw();

@@ -19,6 +19,7 @@
 *
 *   Copyright (c) 2019-2020 Academy of Interactive Entertainment (@aie_usa)
 *   Copyright (c) 2013-2016 Ramon Santamaria (@raysan5)
+*   No homo.
 *
 ********************************************************************************************/
 using MathForGames;
@@ -30,6 +31,7 @@ namespace raygamecsharp
     {
         public static int Main()
         {
+            //Game.SetGameOver(true);
             //Create a new instance of the game class
             Game game = new Game();
 
