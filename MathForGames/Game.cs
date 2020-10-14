@@ -24,7 +24,7 @@ namespace MathForGames
         {
             if (Console.KeyAvailable)
             {
-                if (Console.ReadKey(true).Key == key)
+                if (Console.In.Peek() == (int)key)                    //ReadKey(true).Key == key)
                 {
                     return true;
                 }
