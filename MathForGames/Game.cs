@@ -22,6 +22,7 @@ namespace MathForGames
         //Return whether or not the specified ConsoleKey is pressed.
         public static bool CheckKey(ConsoleKey key)
         {
+            //If the imposer hasn't pressed a key return
             if (Console.KeyAvailable)
             {
                 if (Console.In.Peek() == (int)key)                    //ReadKey(true).Key == key)
@@ -30,13 +31,15 @@ namespace MathForGames
                 }
             }
 
+            //return Console.ReadKey(true).Key
+
             return false;
         }
 
         //Called when the game begins. Use this for initialization.
         public void Start()
         {
-            
+            Console.CursorVisible = false;
             scene = new Scene();
             Actor actorS = new Actor();
             scene.AddActor(actorS);
@@ -75,7 +78,8 @@ namespace MathForGames
                 Update();
                 Draw();
                 while (Console.KeyAvailable) Console.ReadKey(true);
-                Thread.Sleep(50);
+                //Console.ReadKey(true);
+                Thread.Sleep(250);
                 //Console.ReadKey(false);
             }
 
