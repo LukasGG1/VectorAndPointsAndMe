@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
+using MathLibrary;
 
 namespace MathForGames
 {
@@ -10,7 +11,10 @@ namespace MathForGames
     {
         private static bool gameOver = false;
         private Scene scene;
-       
+
+
+        public static ConsoleColor DefaultColor { get; set; } = ConsoleColor.White;
+        
         //Static function used to set game over without an instance of game.
         public static void SetGameOver(bool value)
         {
@@ -20,20 +24,20 @@ namespace MathForGames
 
 
         //Return whether or not the specified ConsoleKey is pressed.
-        public static bool CheckKey(ConsoleKey key)
+        public static  ConsoleKey GetNextKey()
         {
             //If the imposer hasn't pressed a key return
             if (Console.KeyAvailable)
             {
-                if (Console.In.Peek() == (int)key)                    //ReadKey(true).Key == key)
-                {
-                    return true;
-                }
+                                   //ReadKey(true).Key == key)
+                
+                    return 0;
+                
+             
             }
-
+            return Console.ReadKey(true).Key;
             //return Console.ReadKey(true).Key
 
-            return false;
         }
 
         //Called when the game begins. Use this for initialization.
@@ -41,8 +45,10 @@ namespace MathForGames
         {
             Console.CursorVisible = false;
             scene = new Scene();
-            Actor actorS = new Actor();
+            Actor actorS = new Actor(0,0, 'E',ConsoleColor.Green);
+            Player player = new Player(0, 1, 'D', ConsoleColor.Red);
             scene.AddActor(actorS);
+            scene.AddActor(player);
         }
 
 
@@ -50,7 +56,7 @@ namespace MathForGames
         public void Update()
         {
             
-            scene.Update();
+            scene.Update(); 
         }
 
         //Used to display objects and other info on the screen.
