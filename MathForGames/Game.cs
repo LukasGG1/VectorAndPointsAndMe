@@ -40,16 +40,43 @@ namespace MathForGames
 
         }
 
+
+
         //Called when the game begins. Use this for initialization.
         public void Start()
         {
-            Console.CursorVisible = false;
+
+            Console.CursorVisible = true;
             scene = new Scene();
-            Actor actorS = new Actor(0,0, 'E',ConsoleColor.Green);
-            Player player = new Player(0, 1, 'D', ConsoleColor.Red);
-            scene.AddActor(actorS);
+            //Actor actorS = new Actor(0,0, 'E',ConsoleColor.Green);
+            Player player = new Player(0, 0, '■', ConsoleColor.Red);
+            player.Velocity.X = 1;
+            player.Velocity.Y = 1;
+
+
+            //Player players = new Player(1, 2, '■', ConsoleColor.Red);
+           // players.Velocity.X = 1;
+           // players.Velocity.Y = 1;
+            //Player playerss = new Player(2, 3, '■', ConsoleColor.Red);
+            //Player playersss = new Player(1, 4, '■', ConsoleColor.White);
+            //Player playerssss = new Player(2, 1, '■', ConsoleColor.Red);
+            //Player playersssss = new Player(3, 1, '■', ConsoleColor.Red);
+            //       player._veclocity.X = 1;
+            //scene.AddActor(actorS);
             scene.AddActor(player);
+
+            //scene.AddActor(playerss);
+            //scene.AddActor(playersss);
+            //scene.AddActor(playerssss);
+            //scene.AddActor(playersssss);
+            //scene.AddActor(players);
+            //scene.AddActor(players);
+            //scene.AddActor(players);
+            //scene.AddActor(players);
+
         }
+
+
 
 
         //Called every frame.
@@ -85,7 +112,7 @@ namespace MathForGames
                 Draw();
                 while (Console.KeyAvailable) Console.ReadKey(true);
                 //Console.ReadKey(true);
-                Thread.Sleep(250);
+                Thread.Sleep(100);
                 //Console.ReadKey(false);
             }
 

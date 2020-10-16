@@ -13,7 +13,7 @@ namespace MathForGames
         private ConsoleColor _color;
         //private int x = 0;
         //private int y = 0;
-        
+
 
         public Actor()
         {
@@ -29,6 +29,23 @@ namespace MathForGames
             _color = color;
         }
 
+        public Vector2 Velocity
+        {
+            get{ return _veclocity;}
+            set{ _veclocity = value;}
+        }
+
+        //public int GetVelocity()
+        //{
+          //  return _veclocity;
+        //}
+
+        //public void SetVelocity(int velocity)
+        //{
+          //  _veclocity = velocity;
+        //}
+
+
         public void Start()
         {
 
@@ -38,9 +55,10 @@ namespace MathForGames
 
         public virtual void Update() //<    (int num1)
         {
-
-            _position.X += _veclocity.X;
-            _position.Y += _veclocity.Y;
+            _veclocity.X = 1;
+            float magnitude = _veclocity.GetManitude();
+            _position += _veclocity * 5.23f;
+            magnitude = _veclocity.GetManitude();
             _position.X = Math.Clamp(_position.X, 0, Console.WindowWidth - 1);
             _position.Y = Math.Clamp(_position.Y, 0, Console.WindowHeight - 1);
 

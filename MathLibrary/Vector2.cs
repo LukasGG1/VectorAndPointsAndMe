@@ -25,6 +25,7 @@ namespace MathLibrary
             _y = 0;
         }
 
+
         public Vector2(float x, float y)
         {
             _x = x;
@@ -41,6 +42,25 @@ namespace MathLibrary
             {
                 _y = value;
             }
+        }
+        public static Vector2 operator +(Vector2 lhs, Vector2 rhs)
+        {
+            float x = lhs.X + rhs.X;
+            float y = lhs.Y + rhs.Y;
+
+            return new Vector2(x, y);
+        }
+        public static Vector2 operator *(Vector2 lhs, float scalar)
+        {
+
+
+            return new Vector2(lhs.X * scalar, lhs.Y * scalar);
+        }
+
+        public float GetManitude()
+        {
+
+            return (float)Math.Sprt(X * X + Y * Y);
         }
     }
 }
