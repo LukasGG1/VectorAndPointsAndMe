@@ -7,7 +7,7 @@ namespace MathForGames
     class Scene
     {
         private Actor[] actorS;
-
+        public bool Started{ get; private set; }
         public Scene()
         {
             actorS = new Actor[0];
@@ -62,6 +62,10 @@ namespace MathForGames
                 else
                 {
                     actorRemoved = true;
+                    if(actorS[i].Started)
+                    {
+                        actorS[i].End();
+                    }
                 }
                 //else if(i == index)
                 //{
@@ -91,17 +95,21 @@ namespace MathForGames
 
             Actor[] tempArray = new Actor[actorS.Length - 1];
 
-            int jinkle = 0;
+            int j = 0;
             for(int i = 0; i < actorS.Length; i++)
             {
                 if (actor != actorS[i])
                 {
                     tempArray = actorS;
-                    jinkle++;
+                    j++;
                 }
                 else
                 {
                     actorRemoved = true;
+                    if(actor.Started)
+                    {
+                        actor.End();
+                    }
                 }
             }
             //Set the old array to the new array
@@ -114,15 +122,25 @@ namespace MathForGames
         {
             for (int i = 0; i < actorS.Length; i++)
             {
-                actorS[i].Start();
+                if (!actorS[i].Started)
+                {
+                    actorS[i].Start();
+                }
+                actorS[i].Update();
             }
+            Started = true;
         }
         public virtual void Update()
         {
             for (int i = 0; i < actorS.Length; i++)
             {
+               if(!actorS[i].Started)
+                {
+                    actorS[i].Start();
+                }
                 actorS[i].Update();
             }
+            
         }
         public void Draw()
         {
@@ -133,10 +151,15 @@ namespace MathForGames
         }
         public virtual void End()
         {
+
             for (int i = 0; i < actorS.Length; i++)
             {
-                actorS[i].End();
+                if(actorS[i].Started)
+                {
+                    actorS[i].End();
+                }
             }
+            Started = false;
         }
     }
 }

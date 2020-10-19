@@ -60,7 +60,7 @@ namespace MathLibrary
         public float GetManitude()
         {
 
-            return (float)Math.Sprt(X * X + Y * Y);
+            return (float)Math.Sqrt(X * X + Y * Y);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MathLibrary;
+using Raylib_cs;
 
 namespace MathForGames
 {
@@ -11,14 +12,36 @@ namespace MathForGames
         public Player(float x, float y, char icon = ' ', ConsoleColor color = ConsoleColor.White)
             : base(x,y, icon, color)
         {
+            
+        }
+
+        public Player(float x, float y, Color rayColor, char icon = ' ',  ConsoleColor color = ConsoleColor.White)
+            : base(x,y,rayColor,icon,color)
+        {
 
         }
 
        public override void Update()
         
         {
+            int xVelocity = -Convert.ToInt32(Game.GetKeyDown((int)KeyboardKey.KEY_A))
+                + Convert.ToInt32(Game.GetKeyDown((int)KeyboardKey.KEY_D));
 
-           
+            int  yVelocity = -Convert.ToInt32(Game.GetKeyDown((int)KeyboardKey.KEY_W))
+                + Convert.ToInt32(Game.GetKeyDown((int)KeyboardKey.KEY_S));
+
+
+            Velocity = new Vector2(xVelocity, yVelocity);
+
+            if(Velocity.GetManitude() != 0)
+            {
+                Velocity.X /= Velocity.GetManitude();
+                Velocity.Y /= Velocity.GetManitude();
+            }
+            
+
+            //Input for Movement
+
             ConsoleKey keyPressed = Game.GetNextKey();
 
             switch (keyPressed)
@@ -46,6 +69,11 @@ namespace MathForGames
                         _veclocity.Y = 1;
                         break;
                     }
+                case ConsoleKey.Spacebar:
+                    {
+                        Game.SetCurrentScene(1);
+                        break;
+                    }
                 default:
                     {
                         _veclocity.X = 0;
@@ -55,8 +83,8 @@ namespace MathForGames
             }
 
             //Applies force to position
-            _position.X += _veclocity.X;
-            _position.Y += _veclocity.Y;
+            _position += _veclocity * 2;
+            //_position.Y += _veclocity.Y;
 
 
             //make sure position stay within bounds

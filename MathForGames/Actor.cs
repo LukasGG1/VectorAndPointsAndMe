@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MathLibrary;
+using Raylib_cs;
 
 namespace MathForGames
 {
@@ -11,11 +12,13 @@ namespace MathForGames
         protected Vector2 _position;
         protected Vector2 _veclocity;
         private ConsoleColor _color;
+        protected Color _rayColor;
+        public bool Started { get; private set; }
         //private int x = 0;
         //private int y = 0;
 
 
-        public Actor()
+        public Actor(float x)
         {
             _position = new Vector2();
             _veclocity = new Vector2();
@@ -23,6 +26,7 @@ namespace MathForGames
 
         public Actor(float x, float y, char icon = ' ', ConsoleColor color = ConsoleColor.White)
         {
+            _rayColor = Color.WHITE;
             _icon = icon;
             _position = new Vector2(x, y);
             _veclocity = new Vector2();
@@ -31,8 +35,15 @@ namespace MathForGames
 
         public Vector2 Velocity
         {
-            get{ return _veclocity;}
-            set{ _veclocity = value;}
+            get { return _veclocity; }
+            set { _veclocity = value; }
+        }
+
+        public Actor(float x, float y, Color rayColor, char icon = ' ', ConsoleColor color = ConsoleColor.White)
+            : this(x, y, icon, color)
+        {
+            _rayColor = rayColor;
+
         }
 
         //public int GetVelocity()
@@ -48,7 +59,7 @@ namespace MathForGames
 
         public void Start()
         {
-
+            Started = true;
         }
 
 
@@ -56,8 +67,9 @@ namespace MathForGames
         public virtual void Update() //<    (int num1)
         {
             _veclocity.X = 1;
+            _veclocity.Y = 1;
             float magnitude = _veclocity.GetManitude();
-            _position += _veclocity * 5.23f;
+            _position += _veclocity; //* 5.23f;
             magnitude = _veclocity.GetManitude();
             _position.X = Math.Clamp(_position.X, 0, Console.WindowWidth - 1);
             _position.Y = Math.Clamp(_position.Y, 0, Console.WindowHeight - 1);
@@ -96,6 +108,7 @@ namespace MathForGames
 
         public virtual void Draw()
         {
+            Raylib.DrawText(_icon.ToString(), (int)(_position.X * 32), (int)(_position.Y * 32), 32, Color.BLUE);
             Console.ForegroundColor = _color;
             Console.SetCursorPosition((int)_position.X,(int) _position.Y);
             Console.Write(_icon);
@@ -104,7 +117,7 @@ namespace MathForGames
 
         public virtual void End()
         {
-
+            Started = false;
         }
 
 
