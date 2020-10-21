@@ -168,6 +168,7 @@ namespace MathForGames
             
             //Creates two actors to add to our scene
             Actor actorS = new Actor(0,0, 'E',ConsoleColor.Green);
+            Enemy enemy = new Enemy(10, 10, Color.GREEN, '■', ConsoleColor.Green);
             Player player = new Player(1, 1, Color.RED, '■', ConsoleColor.Red);
             player.Velocity.X = 1;
             player.Velocity.Y = 1;
@@ -183,6 +184,7 @@ namespace MathForGames
             //       player._veclocity.X = 1;
 
             scene.AddActor(actorS);
+            scene.AddActor(enemy);
 
             scene.AddActor(player);
             player.Speed = 1;
