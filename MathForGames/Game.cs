@@ -13,7 +13,15 @@ namespace MathForGames
         private static bool gameOver = false;
         private static Scene[] _scenes;
         private Scene scene;
-        private static int _currentScene;
+        private static int _currentSceneIndex;
+
+        public static int CurrentSceneIndex
+        {
+            get
+            {
+                return _currentSceneIndex;
+            }
+        }
         public static ConsoleColor DefaultColor { get; set; } = ConsoleColor.White;
         
         //Static function used to set game over without an instance of game.
@@ -27,8 +35,14 @@ namespace MathForGames
             return _scenes[index];
         }
 
+        public static Scene GetCurrentScene()
+        {
+            return _scenes[_currentSceneIndex];
+        }
+
         public static int AddScene(Scene scene)
         {
+            //
             Scene[] tempArray = new Scene[_scenes.Length + 1];
 
             for(int i = 0; i < _scenes.Length; i++)
@@ -142,17 +156,18 @@ namespace MathForGames
         {
             //Creates a new window for raylib
             Raylib.InitWindow(1024, 760, "Math For Game");
-            Raylib.SetTargetFPS(60);
+            Raylib.SetTargetFPS(1);
 
             //Set up console window
             Console.CursorVisible = false;
             Console.Title = "Math For Game";
 
             //Create a new scene for our actors to exist in
+            _scenes = new Scene[0];
             scene = new Scene();
             
             //Creates two actors to add to our scene
-            //Actor actorS = new Actor(0,0, 'E',ConsoleColor.Green);
+            Actor actorS = new Actor(0,0, 'E',ConsoleColor.Green);
             Player player = new Player(1, 1, Color.RED, '■', ConsoleColor.Red);
             player.Velocity.X = 1;
             player.Velocity.Y = 1;
@@ -167,9 +182,10 @@ namespace MathForGames
             //Player playersssss = new Player(3, 1, '■', ConsoleColor.Red);
             //       player._veclocity.X = 1;
 
-            //scene.AddActor(actorS);
+            scene.AddActor(actorS);
 
             scene.AddActor(player);
+            player.Speed = 1;
             //scene2.AddActor(player);
 
             int startingSceneIndex = 0;
@@ -197,13 +213,13 @@ namespace MathForGames
 
 
         //Called every frame.
-        public void Update()
+        public void Update(float deltaTime)
         {
-           // if (_scenes[_currentSceneIndex].Started)
-             //   _scenes[_currentSceneIndex].Start();
+            if (_scenes[_currentSceneIndex].Started)
+               _scenes[_currentSceneIndex].Start(deltaTime);
 
-          //  _scenes[_currentSceneIndex].Update();
-            //scene.Update(); 
+            _scenes[_currentSceneIndex].Update(deltaTime);
+           scene.Update(deltaTime); 
         }
 
         //Used to display objects and other info on the screen.
@@ -239,11 +255,12 @@ namespace MathForGames
 
             while(!gameOver || !Raylib.WindowShouldClose())
             {
-                if(GetKeyPressed(65))
+                if(GetKeyPressed(32))
                 {
 
                 }
-                Update();
+                float deltaTime = Raylib.GetFrameTime();
+                Update(deltaTime);      //(deltaTime);
                 Draw();
                 while (Console.KeyAvailable) //Console.ReadKey(true);
                 Console.ReadKey(true);

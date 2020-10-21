@@ -118,7 +118,7 @@ namespace MathForGames
             return actorRemoved;
         }
 
-        public virtual void Start()
+        public virtual void Start(float deltaTime)
         {
             for (int i = 0; i < actorS.Length; i++)
             {
@@ -126,11 +126,11 @@ namespace MathForGames
                 {
                     actorS[i].Start();
                 }
-                actorS[i].Update();
+                actorS[i].Update(deltaTime);
             }
             Started = true;
         }
-        public virtual void Update()
+        public virtual void Update(float deltaTime)
         {
             for (int i = 0; i < actorS.Length; i++)
             {
@@ -138,7 +138,7 @@ namespace MathForGames
                 {
                     actorS[i].Start();
                 }
-                actorS[i].Update();
+                actorS[i].Update(deltaTime);
             }
             
         }

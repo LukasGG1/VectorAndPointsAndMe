@@ -11,12 +11,25 @@ namespace MathForGames
         private char _icon = 'E';
         protected Vector2 _position;
         protected Vector2 _veclocity;
+        protected Vector2 _facing;
         private ConsoleColor _color;
         protected Color _rayColor;
         public bool Started { get; private set; }
         //private int x = 0;
         //private int y = 0;
 
+        public Vector2 Forward
+        {
+            get
+            {
+                return _facing;
+
+            }
+            set
+            {
+                _facing = value;
+            }
+        }
 
         public Actor(float x)
         {
@@ -31,6 +44,7 @@ namespace MathForGames
             _position = new Vector2(x, y);
             _veclocity = new Vector2();
             _color = color;
+            Forward = new Vector2(1, 0);
         }
 
         public Vector2 Velocity
@@ -44,6 +58,16 @@ namespace MathForGames
         {
             _rayColor = rayColor;
 
+        }
+
+        private void UpdateFacing()
+        {
+            if(_veclocity.Magnitude > 0)
+            {
+                return;
+            }
+            _facing = Velocity.Normalizaed;
+            //Raylib.DrawLine();
         }
 
         //public int GetVelocity()
@@ -64,13 +88,14 @@ namespace MathForGames
 
 
 
-        public virtual void Update() //<    (int num1)
+        public virtual void Update(float deltaTime) //<    (int num1)
         {
-            _veclocity.X = 1;
-            _veclocity.Y = 1;
-            float magnitude = _veclocity.GetManitude();
-            _position += _veclocity; //* 5.23f;
-            magnitude = _veclocity.GetManitude();
+            //_veclocity.X = 1;
+            //_veclocity.Y = 1;
+            //float magnitude = _veclocity.GetManitude();
+            UpdateFacing();
+            _position += _veclocity * deltaTime;                //* 5.23f;
+            //magnitude = _veclocity.GetManitude();
             _position.X = Math.Clamp(_position.X, 0, Console.WindowWidth - 1);
             _position.Y = Math.Clamp(_position.Y, 0, Console.WindowHeight - 1);
 
@@ -109,10 +134,19 @@ namespace MathForGames
         public virtual void Draw()
         {
             Raylib.DrawText(_icon.ToString(), (int)(_position.X * 32), (int)(_position.Y * 32), 32, Color.BLUE);
+            Raylib.DrawLine(
+                (int)_position.X * 32,
+                (int)_position.Y * 32,
+                (int)((_position.X + Forward.X) * 32),
+                (int)((_position.Y + Forward.Y) * 32),
+                Color.WHITE
+                );
             Console.ForegroundColor = _color;
             Console.SetCursorPosition((int)_position.X,(int) _position.Y);
             Console.Write(_icon);
             Console.ForegroundColor = Game.DefaultColor;
+
+
         }
 
         public virtual void End()

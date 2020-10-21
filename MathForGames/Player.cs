@@ -8,7 +8,19 @@ namespace MathForGames
 {
     class Player : Actor
     {
+        private float _speed = 1;
 
+        public float Speed
+        {
+            get
+            {
+                return _speed;
+            }
+            set
+            {
+                _speed = value;
+            }
+        }
         public Player(float x, float y, char icon = ' ', ConsoleColor color = ConsoleColor.White)
             : base(x,y, icon, color)
         {
@@ -21,7 +33,7 @@ namespace MathForGames
 
         }
 
-       public override void Update()
+       public override void Update(float deltaTime)
         
         {
             int xVelocity = -Convert.ToInt32(Game.GetKeyDown((int)KeyboardKey.KEY_A))
@@ -32,6 +44,7 @@ namespace MathForGames
 
 
             Velocity = new Vector2(xVelocity, yVelocity);
+            Velocity = Velocity.Normalizaed * Speed;
 
             if(Velocity.GetManitude() != 0)
             {
@@ -42,82 +55,19 @@ namespace MathForGames
 
             //Input for Movement
 
-            ConsoleKey keyPressed = Game.GetNextKey();
-
-            switch (keyPressed)
-            {
-                case ConsoleKey.A:
-                    {
-                        _veclocity.X = -1;
-                        break;
-                    }
-
-                case ConsoleKey.D:
-                    {
-                        _veclocity.X = 1;
-                        break;
-                    }
-
-                case ConsoleKey.W:
-                    {
-                        _veclocity.Y = -1;
-                        break;
-                    }
-
-                case ConsoleKey.S:
-                    {
-                        _veclocity.Y = 1;
-                        break;
-                    }
-                case ConsoleKey.Spacebar:
-                    {
-                        Game.SetCurrentScene(1);
-                        break;
-                    }
-                default:
-                    {
-                        _veclocity.X = 0;
-                        _veclocity.Y = 0;
-                        break;
-                    }
-            }
+           
 
             //Applies force to position
             _position += _veclocity * 2;
+            
             //_position.Y += _veclocity.Y;
 
 
             //make sure position stay within bounds
-            _position.X = Math.Clamp(_position.X, 0, Console.WindowWidth);
-            _position.Y = Math.Clamp(_position.Y, 0, Console.WindowHeight);
-            //Update()
-            //ConsoleKey keyPressed = Game.GetNextKey();
-
-            //switch(keyPressed)
-            // {              
-            //  case ConsoleKey.A:
-            //    x--;
-            //  break;
-            // case ConsoleKey.D:
-            //    x++;
-            // break;
-            // case ConsoleKey.W:
-            //    y++;
-            // break;// case ConsoleKey.S:
-            //    y--;
-            // break;
-
-            // }
-            //
-            //if(x <= 0)
-            //x++;
-            //if(x > Console.WindowWidth)
-            //x--;
-            //if(y <= 0)
-            //y++
-            //if(y > Console.WindowHeight)
-            //y--;
-            //}
+            _position.X = Math.Clamp(_position.X, 0, Console.WindowWidth - 1);
+            _position.Y = Math.Clamp(_position.Y, 0, Console.WindowHeight - 1);
+            
+            base.Update(deltaTime);
         }
         //public static Player operator +(Player 1hs, int rhs)
         // {
