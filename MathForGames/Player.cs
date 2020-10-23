@@ -58,9 +58,9 @@ namespace MathForGames
            
 
             //Applies force to position
-            _position += _veclocity * 2;
+            //_position += _veclocity * 2;
             
-            //_position.Y += _veclocity.Y;
+         
 
 
             //make sure position stay within bounds
@@ -69,13 +69,7 @@ namespace MathForGames
             
             base.Update(deltaTime);
         }
-        //public static Player operator +(Player 1hs, int rhs)
-        // {
-        //     if(Ihs.Position.X == rhs.Position.X && 1hs.Position.Y == rhs.Position.X)                     float newX = 1hs.position.X + rhs;
-        //     {                                                                                     float newY = 1hs.Position.Y + rhs;
-        //          return true;                                                                     return new Player(newX, newY);
-        //     }
-        //      return false;
+        
     
     }        
 }

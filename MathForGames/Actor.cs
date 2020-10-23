@@ -81,6 +81,18 @@ namespace MathForGames
         //}
 
 
+        public Vector2 Position
+        {
+            get
+            {
+                return _position;
+            }
+            set
+            {
+                _position = value;
+            }
+        }
+
         public void Start()
         {
             Started = true;
@@ -99,52 +111,30 @@ namespace MathForGames
             _position.X = Math.Clamp(_position.X, 0, Console.WindowWidth - 1);
             _position.Y = Math.Clamp(_position.Y, 0, Console.WindowHeight - 1);
 
-            //Update()
-            //ConsoleKey keyPressed = Game.GetNextKey();
-
-            //switch(keyPressed)
-            // {              
-            //  case ConsoleKey.A:
-            //    x--;
-            //  break;
-            // case ConsoleKey.D:
-            //    x++;
-            // break;
-            // case ConsoleKey.W:
-            //    y++;
-            // break;// case ConsoleKey.S:
-            //    y--;
-            // break;
-
-            // }
-            //
-            //if(x <= 0)
-                //x++;
-            //if(x > Console.WindowWidth)
-                //x--;
-            //if(y <= 0)
-                //y++
-            //if(y > Console.WindowHeight)
-                //y--;
-              //}
-              //Math.Clamp(x, 0, Console.WindowWidth-1);
-              //Math.Clamp(y, 0, Console.WindowHeight-1); 
+            
         }
 
         public virtual void Draw()
         {
             Raylib.DrawText(_icon.ToString(), (int)(_position.X * 32), (int)(_position.Y * 32), 32, Color.BLUE);
             Raylib.DrawLine(
-                (int)_position.X * 32,
-                (int)_position.Y * 32,
+                (int)(_position.X * 32),
+                (int)(_position.Y * 32),
                 (int)((_position.X + Forward.X) * 32),
                 (int)((_position.Y + Forward.Y) * 32),
                 Color.WHITE
                 );
             Console.ForegroundColor = _color;
+
+            if(Position.X >= 0 && Position.X < Console.WindowWidth && Position.Y >= 0 && Position.Y < Console.WindowHeight)
+            {
+                Console.SetCursorPosition((int)_position.X, (int)_position.Y);
+                Console.Write(_icon);
+            }
             Console.SetCursorPosition((int)_position.X,(int) _position.Y);
             Console.Write(_icon);
             Console.ForegroundColor = Game.DefaultColor;
+
 
 
         }
