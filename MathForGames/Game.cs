@@ -194,6 +194,7 @@ namespace MathForGames
            
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.BLACK);
+            
             Console.Clear();
             _scenes[_currentSceneIndex].Draw();
             scene.Draw();
